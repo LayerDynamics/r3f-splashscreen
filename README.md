@@ -38,7 +38,7 @@ export default App;
 
 Below is a GIF that shows what the `SplashScreen` component looks like in action:
 
-![SplashScreen Example](path/to/your/splashscreen.gif)
+![SplashScreen Example](./assets/example.gif)
 
 ## Props
 
@@ -66,17 +66,17 @@ To experiment with different configurations of the `SplashScreen`, you can modif
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/your-repository.git
+   git clone https://github.com/LayerDynamics/r3f-splashscreen.git
    ```
 2. Navigate to the test directory:
    ```bash
-   cd your-repository/test
+   cd r3f-splashscreen
    ```
-3. Open `app.tsx` and modify the props such as `name`, `duration`, `backgroundColor`, etc.
+3. Open `test/app.tsx` and modify the props such as `name`, `duration`, `backgroundColor`, etc.
 4. Install dependencies and run the project:
    ```bash
    npm install
-   npm start
+   npm run dev
    ```
 5. View the changes in your browser to see how different settings affect the component.
 
