@@ -1,10 +1,9 @@
-import React, { useRef, useEffect, useState, FC, RefObject } from 'react';
-import { Canvas, extend, useFrame } from '@react-three/fiber';
+import { useRef, useEffect, useState, FC, RefObject } from 'react';
+import { Canvas, useFrame, extend, Node } from '@react-three/fiber';
 import { Text, shaderMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import { ShaderMaterial } from 'three';
 
-// Define TypeScript interfaces for component props
 interface SplashScreenProps {
   name: string;
   duration: number;
@@ -20,7 +19,19 @@ interface AnimatedBlobProps {
   materialRef: RefObject<ShaderMaterial>;
 }
 
-// Define the custom shader material using drei's shaderMaterial utility
+// Extending the JSX elements for react-three-fiber
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      waveShaderMaterial: Node<ShaderMaterial, typeof ShaderMaterial> & {
+        color?: THREE.Color | string;
+        distortionScale?: number;
+        waveSpeed?: number;
+      };
+    }
+  }
+}
+
 const WaveShaderMaterial = shaderMaterial(
   {
     time: 0,
@@ -28,28 +39,24 @@ const WaveShaderMaterial = shaderMaterial(
     distortionScale: 1.0,
     waveSpeed: 1.0,
   },
-  // Vertex Shader
   `uniform float time;
-  uniform float distortionScale;
-  varying vec2 vUv;
-  void main() {
-    vUv = uv;
-    vec3 pos = position + (normal * sin(time + position.x * 2.0 * distortionScale) * 0.1);
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-  }`,
-  // Fragment Shader
+   uniform float distortionScale;
+   varying vec2 vUv;
+   void main() {
+     vUv = uv;
+     vec3 pos = position + (normal * sin(time + position.x * 2.0 * distortionScale) * 0.1);
+     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+   }`,
   `uniform vec3 color;
-  uniform float time;
-  varying vec2 vUv;
-  void main() {
-    gl_FragColor = vec4(color * cos(time + vUv.x * 4.0), 1.0);
-  }`
+   uniform float time;
+   varying vec2 vUv;
+   void main() {
+     gl_FragColor = vec4(color * cos(time + vUv.x * 4.0), 1.0);
+   }`
 );
 
-// Extend drei's shaderMaterial with the custom shader material
-extend({ WaveShaderMaterial });
+extend({ waveShaderMaterial: WaveShaderMaterial });
 
-// AnimatedBlob component to handle the animation logic
 const AnimatedBlob: FC<AnimatedBlobProps> = ({ materialRef }) => {
   useFrame(({ clock }) => {
     if (materialRef.current) {
@@ -60,7 +67,6 @@ const AnimatedBlob: FC<AnimatedBlobProps> = ({ materialRef }) => {
   return null;
 };
 
-// SplashScreen component that utilizes the props and types defined
 const SplashScreen: FC<SplashScreenProps> = ({
   name,
   duration,
