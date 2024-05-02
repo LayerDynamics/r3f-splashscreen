@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+		"outDir": "./lib",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+		"declaration": true,  // Generates corresponding '.d.ts' file
+    "declarationMap": true,  // Creates a sourcemap for declaration files
+    "sourceMap": true,  // Enables the generation of sourcemap files
+    "esModuleInterop": true,
+    "strict": true,  // Enables all strict type-checking options
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src/**/*"],
+  "references": [{ "path": "./tsconfig.node.json" }],
+	"exclude": ["node_modules", "test"]
+}
